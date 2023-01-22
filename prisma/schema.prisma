@@ -13,9 +13,7 @@ model Post {
   content   String?
   published Boolean @default(false)
   authorId  String?
-  author    User?   @relation(fields: [authorId], references: [id])
 }
-
 
 model User {
   id        String   @id @default(cuid())
@@ -23,8 +21,34 @@ model User {
   email     String?  @unique
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  posts     Post[]
 
   @@map("users")
 }
 
+model all_events {
+  id                String            @id @unique
+  title             String
+  city              String
+  description       String?
+  image             String?
+  events_categories events_categories @relation(fields: [city], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  registration      registration?
+}
+
+model events_categories {
+  id           String         @id
+  title        String?
+  description  String?
+  image        String?
+  all_events   all_events[]
+  registration registration[]
+}
+
+model registration {
+  id                String            @id @db.Uuid
+  email             String
+  event_id          String            @unique
+  city_id           String
+  events_categories events_categories @relation(fields: [city_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  all_events        all_events        @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
