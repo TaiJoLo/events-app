@@ -7,7 +7,7 @@ const SingleEvent = ({ data }) => {
   const router = useRouter();
   const [message, setMessage] = useState("");
 
-  const onSubmit = async (e) => {
+  const submitData = async (e) => {
     e.preventDefault();
     const emailValue = inputEmail.current.value;
     const eventId = router?.query.id;
@@ -29,6 +29,7 @@ const SingleEvent = ({ data }) => {
       });
 
       if (!response.ok) throw new Error(`Error: ${response.status}`);
+
       const data = await response.json();
       setMessage(data.message);
       inputEmail.current.value = "";
@@ -42,7 +43,7 @@ const SingleEvent = ({ data }) => {
       <h1> {data.title} </h1>
       <Image src={data.image} width={1000} height={500} alt={data.title} />
       <p> {data.description} </p>
-      <form onSubmit={onSubmit} className="email_registration">
+      <form onSubmit={submitData} className="email_registration">
         <label> Get Registered for this event!</label>
         <input
           ref={inputEmail}

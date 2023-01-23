@@ -1,71 +1,33 @@
-import path from "path";
-import fs from "fs";
+import prisma from "../../../lib/prisma";
 
-// function buildPath() {
-//   return path.join(process.cwd(), "data", "data.json");
-// }
-
-// function extractData(filePath) {
-//   const jsonData = fs.readFileSync(filePath);
-//   const data = JSON.parse(jsonData);
-//   return data;
-// }
-
-export default function handler(req, res) {
+export default function test() {
   const { method } = req;
-
-  // const filePath = buildPath();
-  // const { events_categories, allEvents } = extractData(filePath);
-
-  // if (!allEvents) {
-  //   return res.status(404).json({
-  //     status: 404,
-  //     message: "Events data not found",
-  //   });
-  // }
-
-  if (method === "POST") {
-    const { email, eventId } = req.body;
-
-    if (!email | !email.includes("@")) {
-      res.status(422).json({ message: "Invalid email address" });
-    }
-
-    const registered = JSON.parse('{ "eventId", "email"}');
-
-    const newData = registered.map((ev) => {
-      return {
-        ...ev,
-        eventId: [...ev, eventId, eventId],
-        email: [...ev.email, email],
-      };
-    });
-
-    fs.writeFileSync("/tmp/data.json", JSON.stringify(newData));
-
-    // const newAllEvents = allEvents.map((ev) => {
-    //   if (ev.id === eventId) {
-    //     if (ev.emails_registered.includes(email)) {
-    //       res
-    //         .status(409)
-    //         .json({ message: "This email has already been registered" });
-    //       return ev;
-    //     }
-    //     return {
-    //       ...ev,
-    //       emails_registered: [...ev.emails_registered, email],
-    //     };
-    //   }
-    //   return ev;
-    // });
-
-    // fs.writeFileSync(
-    //   filePath,
-    //   JSON.stringify({ events_categories, allEvents: newAllEvents })
-    // );
-
-    res.status(201).json({
-      message: `You have been registered successfully with the email: ${email} for the event: ${eventId}`,
-    });
-  }
+  const { email, eventId } = req.body;
+  console.log("email is here: ", email, eventId);
+  return {};
 }
+
+// export default async function handler(req, res) {
+//   const { method } = req;
+
+//   if (method === "POST") {
+//     const { email, eventId } = req.body;
+//     console.log("email is here: ", email, eventId);
+
+//     if (!email | !email.includes("@")) {
+//       res.status(422).json({ message: "Invalid email address" });
+//     }
+
+//     const result = await prisma.emails.create({
+//       data: {
+//         email: email,
+//         eventId: eventId,
+//       },
+//     });
+//     res.json(result);
+
+//     res.status(201).json({
+//       message: `You have been registered successfully with the email: ${email} for the event: ${eventId}`,
+//     });
+//   }
+// }
