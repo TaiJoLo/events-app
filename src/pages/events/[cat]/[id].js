@@ -7,7 +7,6 @@ export default EventPage;
 
 export async function getStaticPaths() {
   const allEvents = await prisma.all_events.findMany();
-  console.log("data_id:", allEvents);
 
   const allPaths = allEvents.map((path) => {
     return {
@@ -25,8 +24,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  console.log("context_catId:", context);
   const id = context.params.id;
+  const cat = context.params.cat;
+  console.log("cat_[id]:", context.params.cat);
 
   const allEvents = await prisma.all_events.findMany();
 

@@ -11,6 +11,7 @@ const SingleEvent = ({ data }) => {
     e.preventDefault();
     const emailValue = inputEmail.current.value;
     const eventId = router?.query.id;
+    const cityId = router?.query.cat;
 
     const validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -25,7 +26,8 @@ const SingleEvent = ({ data }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: emailValue, eventId }),
+
+        body: JSON.stringify({ email: emailValue, eventId, cityId }),
       });
 
       if (!response.ok) throw new Error(`Error: ${response.status}`);
