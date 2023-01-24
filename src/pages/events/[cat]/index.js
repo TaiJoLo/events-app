@@ -9,8 +9,9 @@ export default EventsCatPage;
 
 export async function getStaticPaths() {
   const category = await prisma.events_categories.findMany();
-  const email = await prisma.emails.findMany();
+  // const email = await prisma.emails.findMany();
   // console.log("email_index:", email);
+
   const allPaths = category.map((ev) => {
     return {
       params: {

@@ -33,7 +33,10 @@ const SingleEvent = ({ data }) => {
       if (!response.ok) throw new Error(`Error: ${response.status}`);
 
       const data = await response.json();
+      console.log("data_single_event:", data);
+
       setMessage(data.message);
+
       inputEmail.current.value = "";
     } catch (e) {
       console.log("ERROR", e);
@@ -55,7 +58,7 @@ const SingleEvent = ({ data }) => {
         />
         <button type="submit"> Submit</button>
       </form>
-      <p>{message}</p>
+      <p>{data && message}</p>
     </div>
   );
 };

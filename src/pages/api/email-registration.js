@@ -13,18 +13,35 @@ export default async function test(req, res) {
   if (method === "POST") {
     if (!email | !email.includes("@")) {
       res.status(422).json({ message: "Invalid email address" });
+    } else {
+      const match = await prisma.emails.findMany({
+        where: {
+          email: email,
+          event_id: eventId,
+          city_id: cityId,
+        },
+      });
+      console.log("match:", match);
+      if (match.length !== 0) {
+        res
+          .status(409)
+          .json({ message: "This email has already been registered" });
+      } else {
+        const result = await prisma.emails.create({
+          data: {
+            email: email,
+            event_id: eventId,
+            city_id: cityId,
+          },
+        });
+
+        res
+          .status(201)
+          .json({
+            data: result,
+            message: `You have been registered successfully with the email: ${email} for the event: ${eventId}`,
+          });
+      }
     }
-
-    const result = await prisma.emails.create({
-      data: {
-        email: email,
-        event_id: eventId,
-        city_id: cityId,
-      },
-    });
-
-    res.status(201).json(result, {
-      message: `You have been registered successfully with the email: ${email} for the event: ${eventId}`,
-    });
   }
 }
