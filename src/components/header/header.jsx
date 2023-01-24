@@ -6,12 +6,14 @@ export const Header = () => {
     <header>
       <div>
         <div className="topNav">
-          <Image
-            alt="logo"
-            src={"/images/logo_black.png"}
-            width={50}
-            height={50}
-          />
+          <Link href="/" passHref>
+            <Image
+              alt="logo"
+              src={"/images/logo_black.png"}
+              width={50}
+              height={50}
+            />
+          </Link>
           <nav>
             <ul>
               <li>
@@ -32,6 +34,7 @@ export const Header = () => {
             </ul>
           </nav>
         </div>
+
         <p className="title"> Sed ut perspiciatis unde omnis</p>
       </div>
     </header>
