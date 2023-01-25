@@ -30,16 +30,16 @@ const SingleEvent = ({ data }) => {
         body: JSON.stringify({ email: emailValue, eventId, cityId }),
       });
 
-      if (!response.ok) throw new Error(`Error: ${response.status}`);
-
       const data = await response.json();
+
       console.log("data_single_event:", data);
 
       setMessage(data.message);
+      // if (!response.ok) throw new Error(`Throw Error: ${response.status}`);
 
       inputEmail.current.value = "";
     } catch (e) {
-      console.log("ERROR", e);
+      console.log("ERROR HERE:", e.message);
     }
   };
 

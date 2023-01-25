@@ -23,9 +23,9 @@ export default async function test(req, res) {
       });
       console.log("match:", match);
       if (match.length !== 0) {
-        res
-          .status(409)
-          .json({ message: "This email has already been registered" });
+        res.status(409).json({
+          message: `This email: ${email} has already been registered `,
+        });
       } else {
         const result = await prisma.emails.create({
           data: {
@@ -35,12 +35,10 @@ export default async function test(req, res) {
           },
         });
 
-        res
-          .status(201)
-          .json({
-            data: result,
-            message: `You have been registered successfully with the email: ${email} for the event: ${eventId}`,
-          });
+        res.status(201).json({
+          data: result,
+          message: `You have been registered successfully with the email: ${email} for the event: ${eventId}`,
+        });
       }
     }
   }
